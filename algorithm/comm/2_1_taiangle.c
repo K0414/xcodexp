@@ -25,7 +25,7 @@ int main() {
 
                             if((a+b+c)==(c+d+e) &&
                                (c+d+e)==(e+f+a)) {
-                                printf("a=%d,b=%d,c=%d,d=%d,e=%d,f=%d\n",
+                                printf("%4d%4d%4d%4d%4d%4d\n",
                                        a, b, c, d, e, f);
                             }
                         }
