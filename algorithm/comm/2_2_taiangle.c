@@ -52,7 +52,8 @@ int main() {
             }
         }
 
-        // exchange hi-low number :
+        // lagest(smallest) number
+        // exchanges hi-low digit :
         // largest <-> smallest
         for(j=VARS-1; j>i; j--,i++) {
             t = *pt[i];
