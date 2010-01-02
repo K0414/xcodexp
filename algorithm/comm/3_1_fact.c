@@ -5,7 +5,7 @@
 void fact(int, unsigned int **);
 void add(unsigned int **, unsigned int *);
 
-unsigned int len = 100;
+unsigned int len = 10;
 
 int main() {
         // can't be char, array[0] could be a pretty large number.
@@ -59,14 +59,15 @@ void add(unsigned int **array, unsigned int *ori) {
     if(c) {
             // check whether array[] is full.
         if((*array)[0] == len-1) {
-            len += 100;
+            len += 10;
 
             unsigned int *p = (unsigned int *)malloc(len * sizeof(unsigned int));
             memset(p, 0, len);
-            memcpy(p, *array, len-100);
+            memcpy(p, *array, len - 10);
             free(*array);
             
             *array = p;
+            printf("*");
         }
         (*array)[++(*array)[0]] = 1;
     }
