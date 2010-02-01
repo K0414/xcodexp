@@ -1,30 +1,39 @@
 #include "apue.h"
-
-int     glob = 6;       /* external variable in initialized data */
-char    buf[] = "a write to stdout\n";
+#include <sys/wait.h>
 
 int
 main(void)
 {
-    int       var;      /* automatic variable on the stack */
-    pid_t     pid;
+    pid_t   pid;
+    int     status;
 
-    var = 88;
-    if (write(STDOUT_FILENO, buf, sizeof(buf)-1) != sizeof(buf)-1)
-        err_sys("write error");
-    printf("before fork\n");    /* we don't flush stdout */
-/*	printf("before fork"); */
-
-    if ((pid = fork()) < 0) {
+    if ((pid = fork()) < 0)
         err_sys("fork error");
-    } else if (pid == 0) {      /* child */
-        glob++;                 /* modify variables */
-        var++;
-    } else {
-        sleep(2);               /* parent */
-    }
+    else if (pid == 0)              /* child */
+        exit(7);
 
-    printf("pid = %d, glob = %d, var = %d\n", getpid(), glob, var);
+    if (wait(&status) != pid)       /* wait for child */
+        err_sys("wait error");
+    pr_exit(status);                /* and print its status */
+
+    if ((pid = fork()) < 0)
+        err_sys("fork error");
+    else if (pid == 0)              /* child */
+        abort();                    /* generates SIGABRT */
+
+    if (wait(&status) != pid)       /* wait for child */
+        err_sys("wait error");
+    pr_exit(status);                /* and print its status */
+
+    if ((pid = fork()) < 0)
+        err_sys("fork error");
+    else if (pid == 0)              /* child */
+        status /= 0;                /* divide by 0 generates SIGFPE */
+
+    if (wait(&status) != pid)       /* wait for child */
+        err_sys("wait error");
+    pr_exit(status);                /* and print its status */
+
     exit(0);
 }
 
