@@ -20,7 +20,7 @@ int cmp(const void *a, const void *b);
 int
 main()
 {
-	int i,n,m,c;
+    int i,n,m,c;
     int sel, selup, seldown, t, p, d, k;
 	
     c = 1;
