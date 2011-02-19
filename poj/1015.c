@@ -23,22 +23,22 @@ main()
 	int i,n,m,c;
     int sel, selup, seldown, t, p, d, k;
 	
-	c = 1;
+    c = 1;
     while(scanf("%d%d", &n, &m) != EOF) {
-		if(m==0 && n==0)
-			break;
+        if(m==0 && n==0)
+            break;
 		
-		for(i=0; i<n; i++) {
+        for(i=0; i<n; i++) {
             scanf("%d%d", &CAND[i][0], &CAND[i][1]);
-		}
+        }
 
         memset(OPT, -1, 50000 * sizeof(int));
         memset(USED, -1, 30000 * sizeof(int));
         memset(SEL, -1, 30 * sizeof(int));
         
-		select(n, m);
+        select(n, m);
 		
-		printf("Jury #%d\n", c++);
+        printf("Jury #%d\n", c++);
 		
         selup = seldown = 400;
 
