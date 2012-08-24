@@ -20,11 +20,7 @@ int main()
         gets(pattern);
         
         t = kmp(str, pattern);
-        if(t != -1) {
-            printf(" found : %d\n\n", t);
-        } else {
-            printf(" not found!\n\n");
-        }
+        printf("\n");
     }
 
     return 0;
@@ -64,11 +60,11 @@ int kmp(char *str, char *pat)
             k++;
 
         if(k == m) {
-            return i - m + 1;
-            // k = prefix[k];
+            printf(" found at %d\n", i - m + 1);
+            k = prefix[k];
         }
     }
 
-    return -1;
+    return 0;
 }
 
