@@ -1,4 +1,8 @@
 #include <iostream>
+#include <stack>
+#include <exception>
+#include <assert.h>
+#include <cstring>
 using namespace std;
 
 typedef struct _Node {
@@ -26,18 +30,18 @@ Node *createBinaryTree()
     return p;
 }
 
-void deleteTreeNode(Node *pRoot)
+void deleteBinaryTree(Node *pRoot)
 {
     if(NULL != pRoot) {
-        deleteTreeNode(pRoot->left);
-        deleteTreeNode(pRoot->right);
+        deleteBinaryTree(pRoot->left);
+        deleteBinaryTree(pRoot->right);
         delete pRoot;
     }
 }
 
-void access(const Node& node)
+void access(const Node *pNode)
 {
-    cout << node.name << " ";
+    cout << pNode->name << " ";
 }
 
 /* 
@@ -54,7 +58,7 @@ void preOrderTraverse(Node *pRoot)
 
 void inOrderTraverse(Node *pRoot)
 {
-    if(pNode != NULL) {
+    if(pRoot != NULL) {
         inOrderTraverse(pRoot->left);
         access(pRoot);
         inOrderTraverse(pRoot->right);
@@ -63,10 +67,10 @@ void inOrderTraverse(Node *pRoot)
 
 void postOrderTraverse(Node *pRoot)
 {
-    if(pNode != NULL) {
+    if(pRoot != NULL) {
         postOrderTraverse(pRoot->left);
         postOrderTraverse(pRoot->right);
-        access(pNode);
+        access(pRoot);
     }
 }
 
@@ -78,13 +82,17 @@ void preOrderNonrecursive(Node *pRoot)
     if(pRoot == NULL)
         return;
 
+    Node *p = pRoot;
     stack<Node *> stk;
-    stk.push(pRoot);
+    stk.push(p);
     while(!stk.empty()) {
-        access(stk.top());
+        p = stk.top();
         stk.pop();
-        stk.push(pRoot->left);
-        stk.push(pRoot->right);
+        access(p);
+        if(p->right)
+            stk.push(p->right);
+        if(p->left)
+            stk.push(p->left);
     }
 }
 
@@ -107,4 +115,109 @@ void inOrderNonrecursive(Node *pRoot)
     }
 }
 
+void postOrderNonrecursive(Node *pRoot)
+{
+    stack<Node *> travs;
+    stack<Node *> order;
+
+    if(pRoot == NULL)
+        return;
+
+    Node *p = pRoot;
+    travs.push(p);
+    while(!travs.empty()) {
+        p = travs.top();
+        travs.pop();
+        order.push(p);
+        if(p->left)
+            travs.push(p->left);
+        if(p->right)
+            travs.push(p->right);
+    }
+
+    while(!order.empty()) {
+        access(order.top());
+        order.pop();
+    }
 }
+
+Node *rebuildBinaryTree(char *preStart, char *preEnd, char *inStart, char *inEnd)
+{
+    Node *pNode;
+    char *ptr;
+
+//    if(preStart == NULL || preEnd == NULL || inStart == NULL || inEnd == NULL) {
+//        throw exception("Invalid input");
+//        return NULL;
+//    } else if(preEnd - preStart != inEnd - inStart) {
+//        throw exception("Invalid input");
+//        return NULL;
+//    }
+    assert(preStart != NULL);
+    assert(preEnd != NULL);
+    assert(inStart != NULL);
+    assert(inEnd != NULL);
+
+    pNode = NULL;
+    if(preStart == preEnd && inStart == inEnd) {
+//        if(*preStart != *inStart) {
+//            throw exception("Invalid input");
+//            return NULL;
+//        }
+        assert(*preStart == *inStart);
+        pNode = new Node;
+        pNode->name = *preStart;
+        pNode->left = pNode->right = NULL;
+    } else {
+        pNode = new Node;
+        pNode->name = *preStart;
+        ptr = inStart;
+        while(*ptr != *preStart && ptr <= inEnd)
+            ptr++;
+//        if(ptr > inEnd) {
+//            throw exception("Invalid input");
+//            return NULL;
+//        }
+        assert(ptr <= inEnd);
+        pNode->left = rebuildBinaryTree(preStart + 1,
+                preStart + (ptr - inStart),
+                inStart, ptr - 1);
+        pNode->right = rebuildBinaryTree(preStart + (ptr - inStart + 1),
+                preEnd, ptr + 1, inEnd);
+    }
+}
+
+int main()
+{
+    Node *pTree;
+    pTree = createBinaryTree();
+
+    preOrderTraverse(pTree);
+    cout << endl;
+    inOrderTraverse(pTree);
+    cout << endl;
+    postOrderTraverse(pTree);
+    cout << endl;
+    preOrderNonrecursive(pTree);
+    cout << endl;
+    inOrderNonrecursive(pTree);
+    cout << endl;
+    postOrderNonrecursive(pTree);
+    cout << endl;
+
+    deleteBinaryTree(pTree);
+
+    char *preSeq = "1234567";
+    char *inSeq = "3241675";
+    pTree = rebuildBinaryTree(preSeq, preSeq + strlen(preSeq),
+                inSeq, inSeq + strlen(inSeq));
+    preOrderTraverse(pTree);
+    cout << endl;
+    inOrderTraverse(pTree);
+    cout << endl;
+
+    deleteBinaryTree(pTree);
+
+    return 0;
+}
+
