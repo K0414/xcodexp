@@ -3,7 +3,7 @@
 #include "libstr.h"
 using namespace std;
 
-#define SEP '\0xFF'
+#define SEP '\xFF'
 
 int right_most(string s, int pos)
 {
