@@ -16,7 +16,7 @@ int right_most(string s, int pos)
     return end;
 }
 
-void z_algo(string p, string t, vector<int>& res)
+void z_algo(string t, string p, vector<int>& res)
 {
     string s = p + (char)SEP + t;
     int c,b,l,r,*z = new int[p.size()+1];
@@ -52,9 +52,7 @@ void z_algo(string p, string t, vector<int>& res)
                     res.push_back(i - p.size() - 1);
             }
         }
-        cout << "z[" << i << "]:" << z[i] << " ";
     }
-    cout << endl;
 }
 
 int main()
