@@ -13,7 +13,7 @@ int right_most(string s, int pos)
             break;
         end++;
     }
-    return end;
+    return end - 1 > pos ? end - 1 : pos;
 }
 
 void z_algo(string t, string p, vector<int>& res)
@@ -32,7 +32,7 @@ void z_algo(string t, string p, vector<int>& res)
             c = r - i + 1;
             if(i<p.size())
                 z[i] = c;
-            if(c == p.size())
+            if(c == p.size() && s[i] == p[0]/* for single char pattern */)
                 res.push_back(i - p.size() - 1);
         } else {
             b = r - i + 1;
@@ -42,16 +42,17 @@ void z_algo(string t, string p, vector<int>& res)
                 c = r - l + 1;
                 if(i<p.size())
                     z[i] = c;
-                if(c == p.size())
+                if(c == p.size() && s[i] == p[0]/* for single char pattern */)
                     res.push_back(i - p.size() - 1);
             } else {
                 c = z[i-l];
                 if(i<p.size())
                     z[i] = c;
-                if(c == p.size())
+                if(c == p.size() && s[i] == p[0]/* for single char pattern */)
                     res.push_back(i - p.size() - 1);
             }
         }
+//        cout << "z[" << i << "]:" << c << " l:" << l << " r:" << r << endl;
     }
 }
 
