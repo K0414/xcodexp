@@ -3,8 +3,55 @@
 #include "libstr.h"
 using namespace std;
 
+#define ASIZE 256
+
+/* bad character */
+void make_delta1(int *tab, string p)
+{
+    const int NOT_FOUND = p.size();
+    for(int i=0; i<ASIZE; i++)
+    {
+        tab[i] = NOT_FOUND;
+    }
+    for(int i=0; i<p.size(); i++)
+    {
+        tab[(int)p[i]] = i;
+    }
+}
+
+int is_prefix(string p, int idx)
+{
+    int suffix_len = p.size() - idx;
+    for(int i=0; i<suffix_len; i++)
+    {
+        if(p[i] != p[idx+i])
+            return 0;
+    }
+    return 1;
+}
+
+int suffix_length(string p, int idx)
+{
+    int i;
+    for(i=0; i<idx && p[idx-i] == p[p.size()-i-1]; i++);
+    return i;
+}
+
+/* good prefix */
+void make_delta2(int *tab, string p)
+{
+    int last_prefix_index = p.size()-1;
+    for(int i=p.size()-1; i>=0; i++)
+    {
+        /* once a mismatch found, last_prefix_index never change again? */
+        if(is_prefix(p, i))
+            last_prefix_index = i;
+        tab[i] = last_prefix_index + ;
+    }
+}
+
 /* 
- * 3 strategies that makes boyer_moore algorithm fast:
+ * three strategies that makes boyer_moore algorithm fast:
  * 1) right-to-left match 
  * 2) bad character rule
  * 3) good-prefix rule
@@ -12,33 +59,10 @@ using namespace std;
 void boyer_moore(string t, string p, vector<int>& res)
 {
     // preprocessing stage
-    // 1) R[c]:  right-most occurance of each c in charset
-    // 2) L'[i]: the right-most copy of P[i..n] in P[1..i-1] and P[i-1] differs
-    // 3) l'[i]: the longest index of prefix that matches the suffix of P
-    int R[256] = {0};
-    for(int i=0; i<t.size(); i++)
-    {
-        R[(int)t[i]] = i;
-    }
-    int *N = new int[p.size()];
-    int *L = new int[p.size()];
-    int *l = new int[p.size()];
-    for(int j=0; j<p.size(); j++)
-    {
-        int k = j;
-        while(k && p[k] == p[p.size()-k-1]) k--;
-        N[j] = j - k + 1;
-    }
-    for(int j=0; j<p.size(); j++)
-    {
-        
-    }
 
     // search stage
     
     
-    delete [] L;
-    delete [] l;
 }
 
 int main()
