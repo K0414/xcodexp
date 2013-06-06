@@ -54,6 +54,7 @@ void z_algo(string t, string p, vector<int>& res)
         }
 //        cout << "z[" << i << "]:" << c << " l:" << l << " r:" << r << endl;
     }
+    delete [] z;
 }
 
 int main()
