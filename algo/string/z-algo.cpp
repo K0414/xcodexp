@@ -36,7 +36,7 @@ void z_algo(string t, string p, vector<int>& res)
                 res.push_back(i - p.size() - 1);
         } else {
             b = r - i + 1;
-            if(b>z[i-l]) {
+            if(b>=z[i-l]) {
                 r = right_most(s, r);
                 l = i;
                 c = r - l + 1;
