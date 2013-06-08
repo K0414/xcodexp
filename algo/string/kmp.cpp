@@ -5,11 +5,39 @@ using namespace std;
 
 void preKmp(int tab[], string p)
 {
+    int i,j;
+
+    i = 0;
+    j = tab[0] = -1;
+    while(i<p.size()) {
+        while(j>-1 && p[i] != p[j])
+            j = tab[j];
+        i++;
+        j++;
+        if(p[i] == p[j])
+            tab[i] = tab[i-1];
+        else
+            tab[i] = j;
+    }
 }
 
 void KMP(string t, string p, vector<int>& res)
 {
+    int i,j;
     int *kmpNext = new int[p.size()+1];
+
+    preKmp(kmpNext, p);
+    i = j = 0;
+    while(i<t.size()) {
+        while(j > -1 && t[i] != p[j])
+            j = kmpNext[j];
+        i++;
+        j++;
+        if(j == p.size()) {
+            res.push_back(i - j);
+            j = kmpNext[j];
+        }
+    }
 
     delete [] kmpNext;
 }
