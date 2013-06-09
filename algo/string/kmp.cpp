@@ -15,7 +15,7 @@ void preKmp(int tab[], string p)
         i++;
         j++;
         if(p[i] == p[j])
-            tab[i] = tab[i-1];
+            tab[i] = tab[j];
         else
             tab[i] = j;
     }
