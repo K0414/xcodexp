@@ -94,6 +94,7 @@ int main()
             cout << "search: ";
             cin >> p;
         }
+        cout << endl;
     }
     return 0;
 }
