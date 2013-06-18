@@ -21,9 +21,10 @@ public:
         this->isend = false;
     }
     ~TNode() {}
-    void insert(string s);
-    bool contains(string s);
+    void add_pattern(string s);
+    bool match(string s);
 private:
+    void insert(string s);
     TNode *get_child(char c);
 };
 
@@ -63,17 +64,7 @@ void TNode::insert(string s)
         p->isend = true;
 }
 
-bool TNode::contains(string s)
-{
-    if(s.size() == 0)
-        return isend;
 
-    TNode *p = get_child(s[0]);
-    if(p)
-        return p->contains(s.substr(1));
-    else
-        return false;
-}
 
 int main()
 {
