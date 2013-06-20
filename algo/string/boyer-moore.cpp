@@ -6,7 +6,7 @@ using namespace std;
 #define ASIZE 256
 
 /* bad character */
-void make_delta1(int *tab, string p)
+void make_bcdelta(int *tab, string p)
 {
     const int NOT_FOUND = p.size();
     for(int i=0; i<ASIZE; i++)
@@ -15,7 +15,7 @@ void make_delta1(int *tab, string p)
     }
     for(int i=0; i<p.size(); i++)
     {
-        tab[(int)p[i]] = i;
+        tab[(int)p[i]] = p.size()-1 - i;
     }
 }
 
@@ -38,15 +38,22 @@ int suffix_length(string p, int idx)
 }
 
 /* good prefix */
-void make_delta2(int *tab, string p)
+void make_gsdelta(int *tab, string p)
 {
     int last_prefix_index = p.size()-1;
-    for(int i=p.size()-1; i>=0; i++)
+    for(int i=p.size()-1; i>=0; i--)
     {
-        /* once a mismatch found, last_prefix_index never change again. */
         if(is_prefix(p, i))
             last_prefix_index = i;
-        tab[i] = p.size()-1 - last_prefix_index;
+        tab[i] = p.size()-1 + last_prefix_index - i;
+    }
+    for(int i=0; i<p.size(); i++)
+    {
+        int len=suffix_length(p, i);
+        if(p[i-len] != p[p.size()-1 - len])
+        {
+            tab[p.size()-1 - len] = p.size()-1 - i + len;
+        }
     }
 }
 
@@ -59,10 +66,33 @@ void make_delta2(int *tab, string p)
 void boyer_moore(string t, string p, vector<int>& res)
 {
     // preprocessing stage
+    int longest_fix_len;
+    int *BmBc = new int[ASIZE];
+    int *BmGs = new int[p.size()];
+    make_bcdelta(BmBc, p);
+    make_gsdelta(BmGs, p);
 
     // search stage
-    
-    
+    int i = p.size()-1;
+    while(i<t.size()) {
+        int j = p.size()-1;
+        while(j>=0 && p[j]==t[i]) {
+            i--;
+            j--;
+        }
+        // found
+        if(j < 0) {
+            res.push_back(i+1);
+            i += p.size()+1;
+            j = p.size()-1;
+            continue;
+        }
+        i += max(BmBc[t[i]], BmGs[j]);
+    }
+
+    // cleanup
+    delete [] BmBc;
+    delete [] BmGs;
 }
 
 int main()
@@ -75,7 +105,7 @@ int main()
         cout << "pattern: " << endl;
         cin >> p;
         res.clear();
-        z_algo(s, p, res);
+        boyer_moore(s, p, res);
         for(int i=0; i<res.size(); i++)
             cout << res[i] << ' ';
         cout << endl;
