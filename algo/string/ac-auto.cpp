@@ -35,10 +35,10 @@ public:
     }
     void add_pattern(string s);
     void make_fail_links();
-    bool match(string s, vector<int>& res);
+    bool match(string s, vector<MatchResult>& res);
     string get_pattern(int idx);
 private:
-    TNode *get_child(char c);
+    TNode *get_child(char ch);
     queue<TNode*> q_nodes;
     vector<string> v_patts;
     TNode* cn[n_slots];
@@ -50,22 +50,21 @@ private:
     int patno;
 };
 
-TNode *TNode::get_child(char c)
+TNode *TNode::get_child(char ch)
 {
-    TNode *p = cn[c % n_slots];
-    if(p == NULL)
-        return NULL;
+    TNode *p = cn[ch % n_slots];
     while(p) {
-        if(p->c == c)
+        if(p->c == ch)
             return p;
         p = p->next;
     }
+    return NULL;
 }
 
 string TNode::get_pattern(int idx)
 {
     if(0 < idx && idx <= n_patts)
-        return v_patts[idx];
+        return v_patts[idx-1];
     return "";
 }
 
@@ -81,10 +80,10 @@ void TNode::add_pattern(string s)
             pc = new TNode(s[i]);
             pc->parent = p;
             int idx = s[i] % n_slots;
-            if(p->cn[i] == NULL) {
-                p->cn[i] = pc;
+            if(p->cn[idx] == NULL) {
+                p->cn[idx] = pc;
             } else {
-                TNode *t = p->cn[i];
+                TNode *t = p->cn[idx];
                 while(t->next)
                     t = t->next;
                 t->next = pc;
@@ -97,6 +96,8 @@ void TNode::add_pattern(string s)
 
 void TNode::make_fail_links()
 {
+    if(this->fail) return;
+
     /* pn <-> pnode, pp <-> pparent, pl <-> plink(fail), pc <->pchild */
     TNode *p, *pn, *pp, *pl, *pc;
     this->fail = this;
@@ -126,6 +127,8 @@ void TNode::make_fail_links()
 
 bool TNode::match(string s, vector<MatchResult>& res)
 {
+    make_fail_links();
+
     MatchResult r;
     TNode *p, *pn = this;
     for(int i=0; i<s.size(); i++) {
@@ -134,7 +137,8 @@ bool TNode::match(string s, vector<MatchResult>& res)
             if(p->patno != 0) {
                 r.first = i;
                 r.second = p->patno;
-                p = p->link;
+                res.push_back(r);
+                p = p->fail;
             }
             pn = p;
         } else {
@@ -164,7 +168,7 @@ int main()
         cin >> p;
         while(p != "#") {
             if(acauto.match(p, res)) {
-
+                cout << res.size() << endl;
             } else {
                 cout << "Not Found." << endl;
             }
