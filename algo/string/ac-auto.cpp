@@ -3,7 +3,10 @@
 #include <queue>
 #include <cstring>
 #include "libstr.h"
+#include <assert.h>
 using namespace std;
+
+typedef pair<int, int> MatchResult;
 
 class TNode {
 public:
@@ -14,7 +17,7 @@ public:
         this->c = c;
         memset(this->cn, 0, n_slots * sizeof(TNode*));
         this->next = this->parent = this->fail = NULL;
-        this->isend = false;
+        this->n_patts = this->patno = 0;
     }
     ~TNode()
     {
@@ -33,15 +36,18 @@ public:
     void add_pattern(string s);
     void make_fail_links();
     bool match(string s, vector<int>& res);
+    string get_pattern(int idx);
 private:
     TNode *get_child(char c);
     queue<TNode*> q_nodes;
+    vector<string> v_patts;
     TNode* cn[n_slots];
     char c;
     TNode *next;
     TNode *parent;
     TNode *fail;
-    bool isend;
+    int n_patts;
+    int patno;
 };
 
 TNode *TNode::get_child(char c)
@@ -56,78 +62,100 @@ TNode *TNode::get_child(char c)
     }
 }
 
+string TNode::get_pattern(int idx)
+{
+    if(0 < idx && idx <= n_patts)
+        return v_patts[idx];
+    return "";
+}
+
 void TNode::add_pattern(string s)
 {
-    if(s.size() <= 0) return;
-    TNode *p = get_child(s[0]);
-    if(p == NULL) {
-        TNode *nn = new TNode(s[0]);
-        nn->parent = this;
-        int i = s[0] % n_slots;
-        if(cn[i] == NULL) {
-            cn[i] = nn;
-        } else {
-            p = cn[i];
-            while(p->next)
-                p = p->next;
-            p->next = nn;
+    v_patts.push_back(s);
+
+    TNode *p, *pc;
+    p = this;
+    for(int i=0; i<s.size(); i++) {
+        pc = p->get_child(s[i]);
+        if(pc == NULL) {
+            pc = new TNode(s[i]);
+            pc->parent = p;
+            int idx = s[i] % n_slots;
+            if(p->cn[i] == NULL) {
+                p->cn[i] = pc;
+            } else {
+                TNode *t = p->cn[i];
+                while(t->next)
+                    t = t->next;
+                t->next = pc;
+            }
         }
-        p = nn;
+        p = pc;
     }
-    
-    if(s.size() > 1)
-        p->add_pattern(s.substr(1));
-    else
-        p->isend = true;
+    p->patno = ++n_patts;
 }
 
 void TNode::make_fail_links()
 {
-    /* pn <-> pnode, pp <-> pparent, pl <-> plink(fail) */
-    TNode *p, *pn, *pp, *pl;
+    /* pn <-> pnode, pp <-> pparent, pl <-> plink(fail), pc <->pchild */
+    TNode *p, *pn, *pp, *pl, *pc;
     this->fail = this;
     q_nodes.push(this);
     while(!q_nodes.empty()) {
         pn = q_nodes.front();
         q_nodes.pop();
         for(int i=0; i<n_slots; i++) {
-            TNode *ps = cn[i];
-            while(ps) {
-                pp = ps->parent;
-                if(pp && pp != this) {
-                    pl = pp->fail;
-                    while(pl->get_child(pn->c) == NULL && pl != this) {
-                        pl = pl->fail;
-                    }
-                    p = pl->get_child(pn->c);
-                    if(p) {
-                        pn->fail = p;
-                    } else {
-                        pn->fail = this;
-                    }
+            pc = pn->cn[i];
+            while(pc) {
+                pl = pn->fail;
+                while(pl->get_child(pn->c) == NULL && pl != this) {
+                    pl = pl->fail;
                 }
-                q_nodes.push(ps);
-                ps = ps->next;
+                p = pl->get_child(pc->c);
+                if(p) {
+                    pc->fail = p;
+                } else {
+                    pc->fail = this;
+                }
+                q_nodes.push(pc);
+                pc = pc->next;
             }
         }
     }
 }
 
-
-bool TNode::match(string s, vector<int>& res)
+bool TNode::match(string s, vector<MatchResult>& res)
 {
-    return ;
-}		/* -----  end of function TNode::match  ----- */
+    MatchResult r;
+    TNode *p, *pn = this;
+    for(int i=0; i<s.size(); i++) {
+        p = pn->get_child(s[i]);
+        if(p) {
+            if(p->patno != 0) {
+                r.first = i;
+                r.second = p->patno;
+                p = p->link;
+            }
+            pn = p;
+        } else {
+            while(!pn->fail->get_child(s[i]) && pn->fail != this)
+                pn = pn->fail;
+        }
+    }
+    return res.empty();
+}
 
 int main()
 {
     string s, p;
-    vector<int> res;
+    vector<MatchResult> res;
+    vector<string> patterns;
     while(true) {
         TNode acauto('^');
         cout << "add pattern: ";
         cin >> s;
         while(s != "#") {
+            patterns.push_back(s);
             acauto.add_pattern(s);
             cout << "add pattern: ";
             cin >> s;
@@ -147,3 +175,4 @@ int main()
     }
     return 0;
 }
+
