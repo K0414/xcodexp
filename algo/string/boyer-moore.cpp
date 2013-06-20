@@ -43,10 +43,10 @@ void make_delta2(int *tab, string p)
     int last_prefix_index = p.size()-1;
     for(int i=p.size()-1; i>=0; i++)
     {
-        /* once a mismatch found, last_prefix_index never change again? */
+        /* once a mismatch found, last_prefix_index never change again. */
         if(is_prefix(p, i))
             last_prefix_index = i;
-        tab[i] = last_prefix_index + ;
+        tab[i] = p.size()-1 - last_prefix_index;
     }
 }
 
