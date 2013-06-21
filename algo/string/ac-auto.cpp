@@ -109,12 +109,12 @@ void TNode::make_fail_links()
             pc = pn->cn[i];
             while(pc) {
                 pl = pn->fail;
-                while(pl->get_child(pn->c) == NULL && pl != this) {
+                while(pl->get_child(pc->c) == NULL && pl != this) {
                     pl = pl->fail;
                 }
                 p = pl->get_child(pc->c);
                 if(p) {
-                    pc->fail = p;
+                    pc->fail = p == pc ? this : p;
                 } else {
                     pc->fail = this;
                 }
@@ -142,24 +142,22 @@ bool TNode::match(string s, vector<MatchResult>& res)
             }
             pn = p;
         } else {
-            while(!pn->fail->get_child(s[i]) && pn->fail != this)
+            while(pn->fail->get_child(s[i]) == NULL && pn->fail != pn)
                 pn = pn->fail;
         }
     }
-    return res.empty();
+    return !res.empty();
 }
 
 int main()
 {
     string s, p;
     vector<MatchResult> res;
-    vector<string> patterns;
     while(true) {
         TNode acauto('^');
         cout << "add pattern: ";
         cin >> s;
         while(s != "#") {
-            patterns.push_back(s);
             acauto.add_pattern(s);
             cout << "add pattern: ";
             cin >> s;
@@ -167,8 +165,12 @@ int main()
         cout << "search: ";
         cin >> p;
         while(p != "#") {
+            res.clear();
             if(acauto.match(p, res)) {
-                cout << res.size() << endl;
+                for(int i=0; i<res.size(); i++) {
+                    const string& pat = acauto.get_pattern(res[i].second);
+                    cout << "\t\"" << pat << "\"" << " : " << res[i].first - pat.size() + 1 << endl;
+                }
             } else {
                 cout << "Not Found." << endl;
             }
