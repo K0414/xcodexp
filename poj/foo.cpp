@@ -1,33 +1,50 @@
-/* POJ - 1062
- * DFS
- * */
 #include <iostream>
+#include <cstdio>
+#include <cstring>
 using namespace std;
 
-const int NUM = 101;
+#define SIZE 32001
 
-struct Item {
-    int level;
-    int value;
-};
+int a[SIZE + 1];
+int c[SIZE + 1];
 
-int replaceMap[NUM][NUM];
-Item items[NUM];
-
-int dfsCheck(int id, int maxLevel, int minLevel)
+int lowbit(int t)
 {
-    
+    return ((-t) & t);
+}
+
+int sum(int end)
+{
+    int sum = 0;
+    while(end > 0) {
+        sum += c[end];
+        end -= lowbit(end);
+    }
+    return sum;
+}
+
+void add(int pos, int val)
+{
+    while(pos <= SIZE) {
+        c[pos] += val;
+        pos += lowbit(pos);
+    }
 }
 
 int main()
 {
-    int m, n;
-    int p, l, x;
-    int t, v;
-
-    scanf("%d%d", &m, &n);
-    for(int i = 0; i < n; i++)
-    {
-
+    int i, n, x, y;
+    while(scanf("%d", &n) != EOF) {
+        memset(a, 0, sizeof(int) * (SIZE + 1));
+        memset(c, 0, sizeof(int) * (SIZE + 1));
+        for (i = 0; i < n; i++) {
+            scanf("%d%d", &x, &y);
+            x++;
+            a[sum(x)]++;
+            add(x, 1);
+        }
+        for(i = 0; i < n; i++)
+            printf("%d\n", a[i]);
     }
+    return 0;
 }
