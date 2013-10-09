@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 import re
 import sys
 import logging
@@ -43,7 +43,7 @@ class POJ:
         try:
             req = urllib2.Request(POJ.URL_LOGIN,postdata)
             res = self.opener.open(POJ.URL_LOGIN,postdata).read()
-            if res.find('loginlog')>0: 
+            if res.find('loginlog')>0:
                 logging.info("login successful!")
                 return True
             else:
@@ -96,14 +96,13 @@ if __name__=='__main__':
     logging.basicConfig(level=logging.INFO,format = FORMAT)
     if len(sys.argv) > 1: #.......
         user_id = 'faircoala'
-        magic = 1218210867120
         lang = 'g++'
-        pwd = '%d' % ( magic / 1392 )
+        pwd = 'poj@ict'
         pid, src, = sys.argv[1:]
         src = open(src,'r').read()
     else:  #..
         user_id = 'faircoala'
-        pwd = '000000'
+        pwd = 'poj@ict'
         pid = 1000
         lang = 'gcc'
         src = '''
