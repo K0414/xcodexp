@@ -113,16 +113,14 @@ class Palindrome(object):
 
         # table[(i,j)] memoizes if s[i:j+1] is a palindrome.
         table = dict()
-        longest = ''
+        longest = s and s[0] or ''
 
         for i in range(len(s)):
             table[(i, i)] = True
-            if len(longest) < 1:
-                longest = s[i]
 
         for i in range(len(s)-1):
             table[(i, i+1)] = (s[i] == s[i+1])
-            if len(longest) < 2:
+            if table[(i, i+1)] and len(longest) < 2:
                 longest = s[i:i+2]
 
         for d in range(2, len(s)):
@@ -146,7 +144,7 @@ class Palindrome(object):
 
         @ivar R: Right bound of the palindrome centered at C.
         """
-        ss = '#' + '#'.join(s) + '#'
+        ss = '\0' + '\0'.join(s) + '\0'
         P = [0] * len(ss)
         C = R = 0
         for i in range(1, len(ss)):
@@ -154,7 +152,7 @@ class Palindrome(object):
 
             P[i] = R > i and min(P[i_mirror], R - i) or 0
 
-            while (i - P[i] - 1 > 0) and (i + P[i] + 1 < len(ss)) \
+            while (i - P[i] - 1 >= 0) and (i + P[i] + 1 < len(ss)) \
                     and (ss[i - P[i] - 1] == ss[i + P[i] + 1]):
                 P[i] += 1
 
@@ -162,7 +160,7 @@ class Palindrome(object):
                 R = i + P[i]
                 C = i
 
-        longest = ''
+        longest = s and s[0] or ''
         for i in range(1, len(ss)):
             if P[i] > len(longest):
                 l = (i - P[i]) / 2
