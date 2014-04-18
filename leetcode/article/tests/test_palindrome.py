@@ -1,11 +1,10 @@
 from palindrome import Palindrome, LPS_DP, LPS_LCS, LPS_EXPANSION, LPS_MANACHER
 from nose.tools import assert_equal
 
-class TestPalindrome(object):
+s = 'FourscoreandsevenyearsagoourfaathersbroughtforthonthiscontainentanewnationconceivedinzLibertyanddedicatedtothepropositionthatallmenarecreatedequalNowweareengagedinagreahtcivilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'
+r = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
 
-    @classmethod
-    def setup_class(self):
-        self.s = 'FourscoreandsevenyearsagoourfaathersbroughtforthonthiscontainentanewnationconceivedinzLibertyanddedicatedtothepropositionthatallmenarecreatedequalNowweareengagedinagreahtcivilwartestingwhetherthatnaptionoranynartionsoconceivedandsodedicatedcanlongendureWeareqmetonagreatbattlefiemldoftzhatwarWehavecometodedicpateaportionofthatfieldasafinalrestingplaceforthosewhoheregavetheirlivesthatthatnationmightliveItisaltogetherfangandproperthatweshoulddothisButinalargersensewecannotdedicatewecannotconsecratewecannothallowthisgroundThebravelmenlivinganddeadwhostruggledherehaveconsecrateditfaraboveourpoorponwertoaddordetractTgheworldadswfilllittlenotlenorlongrememberwhatwesayherebutitcanneverforgetwhattheydidhereItisforusthelivingrathertobededicatedheretotheulnfinishedworkwhichtheywhofoughtherehavethusfarsonoblyadvancedItisratherforustobeherededicatedtothegreattdafskremainingbeforeusthatfromthesehonoreddeadwetakeincreaseddevotiontothatcauseforwhichtheygavethelastpfullmeasureofdevotionthatweherehighlyresolvethatthesedeadshallnothavediedinvainthatthisnationunsderGodshallhaveanewbirthoffreedomandthatgovernmentofthepeoplebythepeopleforthepeopleshallnotperishfromtheearth'
+class TestPalindrome(object):
 
     def test_lps_lcs(self):
         p = Palindrome()
@@ -16,8 +15,8 @@ class TestPalindrome(object):
         assert_equal(p.longest_palindrome_substring('ababa', LPS_LCS), 'ababa')
         assert_equal(p.longest_palindrome_substring('abaaba', LPS_LCS), 'abaaba')
         assert_equal(p.longest_palindrome_substring('abcfgcba', LPS_LCS), 'a')
-        assert_equal(p.longest_palindrome_substring('aaaaaaaa', LPS_LCS), 'aaaaaaaa')
-        assert_equal(p.longest_palindrome_substring(self.s, LPS_LCS), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(s, LPS_LCS), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(r, LPS_LCS), r)
 
     def test_lps_dp(self):
         p = Palindrome()
@@ -28,8 +27,8 @@ class TestPalindrome(object):
         assert_equal(p.longest_palindrome_substring('ababa', LPS_DP), 'ababa')
         assert_equal(p.longest_palindrome_substring('abaaba', LPS_DP), 'abaaba')
         assert_equal(p.longest_palindrome_substring('abcfgcba', LPS_DP), 'a')
-        assert_equal(p.longest_palindrome_substring('aaaaaaaa', LPS_DP), 'aaaaaaaa')
-        assert_equal(p.longest_palindrome_substring(self.s, LPS_DP), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(s, LPS_DP), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(r, LPS_DP), r)
 
     def test_lps_expansion(self):
         p = Palindrome()
@@ -40,11 +39,8 @@ class TestPalindrome(object):
         assert_equal(p.longest_palindrome_substring('ababa', LPS_EXPANSION), 'ababa')
         assert_equal(p.longest_palindrome_substring('abaaba', LPS_EXPANSION), 'abaaba')
         assert_equal(p.longest_palindrome_substring('abcfgcba', LPS_EXPANSION), 'a')
-        assert_equal(
-                p.longest_palindrome_substring('aaaaaaaa', LPS_EXPANSION),
-                'aaaaaaaa'
-        )
-        assert_equal(p.longest_palindrome_substring(self.s, LPS_EXPANSION), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(s, LPS_EXPANSION), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(r, LPS_EXPANSION), r)
 
     def test_lps_manacher(self):
         p = Palindrome()
@@ -55,8 +51,5 @@ class TestPalindrome(object):
         assert_equal(p.longest_palindrome_substring('ababa', LPS_MANACHER), 'ababa')
         assert_equal(p.longest_palindrome_substring('abaaba', LPS_MANACHER), 'abaaba')
         assert_equal(p.longest_palindrome_substring('abcfgcba', LPS_MANACHER), 'a')
-        assert_equal(
-                p.longest_palindrome_substring('aaaaaaaa', LPS_MANACHER),
-                'aaaaaaaa'
-        )
-        assert_equal(p.longest_palindrome_substring(self.s, LPS_MANACHER), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(s, LPS_MANACHER), 'ranynar')
+        assert_equal(p.longest_palindrome_substring(r, LPS_MANACHER), r)
