@@ -110,7 +110,6 @@ class Palindrome(object):
         return lcs(s, r, check)
 
     def _lps_dp(self, s):
-
         # table[(i,j)] memoizes if s[i:j+1] is a palindrome.
         table = dict()
         longest = s and s[0] or ''

@@ -1,0 +1,107 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Alt	regexp.h	/^	Alt = 1,$/;"	e	enum:__anon2
+Any	regexp.h	/^	Any,$/;"	e	enum:__anon3
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=-ggdb -Wall -O2$/;"	m
+Cat	regexp.h	/^	Cat,$/;"	e	enum:__anon2
+Char	regexp.h	/^	Char = 1,$/;"	e	enum:__anon3
+Dot	regexp.h	/^	Dot,$/;"	e	enum:__anon2
+HFILES	Makefile	/^HFILES=\\$/;"	m
+Inst	regexp.h	/^struct Inst$/;"	s
+Inst	regexp.h	/^typedef struct Inst Inst;$/;"	t	typeref:struct:Inst
+Jmp	regexp.h	/^	Jmp,$/;"	e	enum:__anon3
+Lit	regexp.h	/^	Lit,$/;"	e	enum:__anon2
+MAXSUB	regexp.h	/^	MAXSUB = 20$/;"	e	enum:__anon4
+Match	regexp.h	/^	Match,$/;"	e	enum:__anon3
+OFILES	Makefile	/^OFILES=\\$/;"	m
+Paren	regexp.h	/^	Paren,$/;"	e	enum:__anon2
+Plus	regexp.h	/^	Plus,$/;"	e	enum:__anon2
+Prog	regexp.h	/^struct Prog$/;"	s
+Prog	regexp.h	/^typedef struct Prog Prog;$/;"	t	typeref:struct:Prog
+Quest	regexp.h	/^	Quest,$/;"	e	enum:__anon2
+Regexp	regexp.h	/^struct Regexp$/;"	s
+Regexp	regexp.h	/^typedef struct Regexp Regexp;$/;"	t	typeref:struct:Regexp
+Save	regexp.h	/^	Save,$/;"	e	enum:__anon3
+Split	regexp.h	/^	Split,$/;"	e	enum:__anon3
+Star	regexp.h	/^	Star,$/;"	e	enum:__anon2
+Sub	regexp.h	/^struct Sub$/;"	s
+Sub	regexp.h	/^typedef struct Sub Sub;$/;"	t	typeref:struct:Sub
+TARG	Makefile	/^TARG=re$/;"	m
+Thread	backtrack.c	/^struct Thread$/;"	s	file:
+Thread	backtrack.c	/^typedef struct Thread Thread;$/;"	t	typeref:struct:Thread	file:
+Thread	pike.c	/^struct Thread$/;"	s	file:
+Thread	pike.c	/^typedef struct Thread Thread;$/;"	t	typeref:struct:Thread	file:
+Thread	thompson.c	/^struct Thread$/;"	s	file:
+Thread	thompson.c	/^typedef struct Thread Thread;$/;"	t	typeref:struct:Thread	file:
+ThreadList	pike.c	/^struct ThreadList$/;"	s	file:
+ThreadList	pike.c	/^typedef struct ThreadList ThreadList;$/;"	t	typeref:struct:ThreadList	file:
+ThreadList	thompson.c	/^struct ThreadList$/;"	s	file:
+ThreadList	thompson.c	/^typedef struct ThreadList ThreadList;$/;"	t	typeref:struct:ThreadList	file:
+addthread	pike.c	/^addthread(ThreadList *l, Thread t, char *sp)$/;"	f	file:
+addthread	thompson.c	/^addthread(ThreadList *l, Thread t)$/;"	f	file:
+alt	parse.y	/^alt:$/;"	l
+backtrack	backtrack.c	/^backtrack(Prog *prog, char *input, char **subp, int nsubp)$/;"	f
+c	regexp.h	/^	int c;$/;"	m	struct:Inst
+ch	regexp.h	/^	int ch;$/;"	m	struct:Regexp
+compile	compile.c	/^compile(Regexp *r)$/;"	f
+concat	parse.y	/^concat:$/;"	l
+count	compile.c	/^count(Regexp *r)$/;"	f	file:
+count	parse.y	/^count:$/;"	l
+decref	sub.c	/^decref(Sub *s)$/;"	f
+emit	compile.c	/^emit(Regexp *r)$/;"	f	file:
+fn	main.c	/^	int (*fn)(Prog*, char*, char**, int);$/;"	m	struct:__anon1	file:
+freesub	sub.c	/^Sub *freesub;$/;"	v
+gen	regexp.h	/^	int gen;	\/\/ global state, oooh!$/;"	m	struct:Inst
+incref	sub.c	/^incref(Sub *s)$/;"	f
+left	regexp.h	/^	Regexp *left;$/;"	m	struct:Regexp
+len	regexp.h	/^	int len;$/;"	m	struct:Prog
+line	parse.y	/^line: alt EOL$/;"	l
+main	main.c	/^main(int argc, char **argv)$/;"	f
+n	pike.c	/^	int n;$/;"	m	struct:ThreadList	file:
+n	regexp.h	/^	int n;$/;"	m	struct:Inst
+n	regexp.h	/^	int n;$/;"	m	struct:Regexp
+n	thompson.c	/^	int n;$/;"	m	struct:ThreadList	file:
+name	main.c	/^	char *name;$/;"	m	struct:__anon1	file:
+nelem	regexp.h	12;"	d
+newsub	sub.c	/^newsub(int n)$/;"	f
+nil	regexp.h	11;"	d
+nsub	regexp.h	/^	int nsub;$/;"	m	struct:Sub
+opcode	regexp.h	/^	int opcode;$/;"	m	struct:Inst
+pc	backtrack.c	/^	Inst *pc;$/;"	m	struct:Thread	file:
+pc	compile.c	/^static Inst *pc;$/;"	v	file:
+pc	pike.c	/^	Inst *pc;$/;"	m	struct:Thread	file:
+pc	thompson.c	/^	Inst *pc;$/;"	m	struct:Thread	file:
+pikevm	pike.c	/^pikevm(Prog *prog, char *input, char **subp, int nsubp)$/;"	f
+printprog	compile.c	/^printprog(Prog *p)$/;"	f
+recursive	recursive.c	/^recursive(Inst *pc, char *sp, char **subp, int nsubp)$/;"	f
+recursiveloop	recursive.c	/^recursiveloop(Inst *pc, char *sp, char **subp, int nsubp)$/;"	f
+recursiveloopprog	recursive.c	/^recursiveloopprog(Prog *prog, char *input, char **subp, int nsubp)$/;"	f
+recursiveprog	recursive.c	/^recursiveprog(Prog *prog, char *input, char **subp, int nsubp)$/;"	f
+ref	regexp.h	/^	int ref;$/;"	m	struct:Sub
+repeat	parse.y	/^repeat:$/;"	l
+right	regexp.h	/^	Regexp *right;$/;"	m	struct:Regexp
+single	parse.y	/^single:$/;"	l
+sp	backtrack.c	/^	char *sp;$/;"	m	struct:Thread	file:
+start	regexp.h	/^	Inst *start;$/;"	m	struct:Prog
+sub	backtrack.c	/^	Sub *sub;$/;"	m	struct:Thread	file:
+sub	pike.c	/^	Sub *sub;$/;"	m	struct:Thread	file:
+sub	regexp.h	/^	char *sub[MAXSUB];$/;"	m	struct:Sub
+t	pike.c	/^	Thread t[1];$/;"	m	struct:ThreadList	file:
+t	thompson.c	/^	Thread t[1];$/;"	m	struct:ThreadList	file:
+tab	main.c	/^} tab[] = {$/;"	v	typeref:struct:__anon1
+thompsonvm	thompson.c	/^thompsonvm(Prog *prog, char *input, char **subp, int nsubp)$/;"	f
+thread	backtrack.c	/^thread(Inst *pc, char *sp, Sub *sub)$/;"	f	file:
+thread	pike.c	/^thread(Inst *pc, Sub *sub)$/;"	f	file:
+thread	thompson.c	/^thread(Inst *pc)$/;"	f	file:
+threadlist	pike.c	/^threadlist(int n)$/;"	f	file:
+threadlist	thompson.c	/^threadlist(int n)$/;"	f	file:
+type	regexp.h	/^	int type;$/;"	m	struct:Regexp
+update	sub.c	/^update(Sub *s, int i, char *p)$/;"	f
+usage	main.c	/^usage(void)$/;"	f
+x	regexp.h	/^	Inst *x;$/;"	m	struct:Inst
+y	regexp.h	/^	Inst *y;$/;"	m	struct:Inst
