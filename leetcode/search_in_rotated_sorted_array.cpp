@@ -32,10 +32,10 @@ bool test(int A[], int n, int target, int real)
     Solution sol;
     int res = sol.search(A, n, target);
     cout << "[\033[1;" << ((res == real) ? "32mPass" : "31mFail") << "\033[0m] "
-         << "search([";
+         << "search([ ";
     for (int i = 0; i < n; i++)
         cout << A[i] << " ";
-    cout << "] , " << target << ") -> " << res << endl;
+    cout << "], " << target << ") -> " << res << endl;
 }
 
 int main()
