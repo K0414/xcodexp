@@ -4,6 +4,10 @@ class Solution:
     # @param prices, a list of integer
     # @return an integer
     def maxProfit(self, prices):
+        #return self._max_2n(prices)
+        return self._max_dp(prices)
+
+    def _max_2n(self, prices):
         if not prices: return 0
         lowest = prices[0]
         lbound = []
@@ -17,6 +21,17 @@ class Solution:
             if p > mp:
                 mp = p
         return mp
+
+    def _max_dp(self, prices):
+        maxp = 0
+        dp = 0
+        for i in range(1, len(prices)):
+            if dp > 0:
+                dp += (prices[i] - prices[i-1])
+            else:
+                dp = max(0, (prices[i] - prices[i-1]))
+            maxp = max(dp, maxp)
+        return maxp
 
 
 class TestSolution(object):
