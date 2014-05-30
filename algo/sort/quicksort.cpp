@@ -8,7 +8,7 @@ int quicksort(char *vec, int l, int r);
 
 int main()
 {
-    char arr[11] = "8345190627";
+    char arr[] = "3213421";
 
     quicksort(arr, 0, strlen(arr) - 1);
     printf("%s\n", arr);
