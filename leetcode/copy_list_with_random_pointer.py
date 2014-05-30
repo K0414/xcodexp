@@ -11,6 +11,10 @@ class Solution:
     # @param head, a RandomListNode
     # @return a RandomListNode
     def copyRandomList(self, head):
+        #return self._copy(head)
+        return self._copy_inplace(head)
+
+    def _copy(self, head):
         if not head: return None
         nodes = []
         idxmap = {}
@@ -27,6 +31,34 @@ class Solution:
                 nodes[i].random = nodes[idxmap[h.random]]
             h = h.next
         return nodes[0]
+
+    def _copy_inplace(self, head):
+        if not head: return None
+        # 1) Copy.
+        h = head
+        while h:
+            n = RandomListNode(h.label)
+            n.next = h.next
+            h.next = n
+            h = n.next
+        # 2) Connect random.
+        h = head
+        while h:
+            n = h.next
+            if h.random:
+                n.random = h.random.next
+            h = n.next
+        # 3) Split.
+        newh = head.next
+        h = head
+        p = newh
+        while h:
+            h.next = p.next
+            h = h.next
+            if h:
+                p.next = h.next
+                p = p.next
+        return newh
 
 
 class TestSolution(object):
