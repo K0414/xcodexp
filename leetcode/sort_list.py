@@ -33,7 +33,7 @@ class Solution:
         return head
 
     def _mergesort(self, head):
-        if not head or not head.next: return
+        if not head or not head.next: return head
         fastp = head
         slowp = head
         while fastp.next and fastp.next.next:
@@ -48,19 +48,27 @@ class Solution:
     def _merge(self, h1, h2):
         if not h1: return h2
         if not h2: return h1
+        head = None
         if h1.val > h2.val:
-            h1, h2 = h2, h1
-        head = h1
+            head = h2
+            h2 = h2.next
+        else:
+            head = h1
+            h1 = h1.next
+        p = head
         while h1 and h2:
             if h1.val < h2.val:
-                t = h2
-                h2 = h2.next
-                t.next = h1.next
-                h1.next = h2
-                h1 = t.next
+                p.next = h1
+                h1 = h1.next
             else:
-
-        return h1
+                p.next = h2
+                h2 = h2.next
+            p = p.next
+        if h1:
+            p.next = h1
+        if h2:
+            p.next = h2
+        return head
 
 
 class TestSolution(object):
@@ -82,6 +90,36 @@ class TestSolution(object):
             h = h.next
         return result
 
+    def test_merge(self):
+        s = Solution()
+        l1 = self._build([1])
+        l2 = self._build([])
+        assert_equal(self._extract(s._merge(l1, l2)), [1])
+        l1 = self._build([])
+        l2 = self._build([1])
+        assert_equal(self._extract(s._merge(l1, l2)), [1])
+        l1 = self._build([1])
+        l2 = self._build([2])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2])
+        l1 = self._build([2])
+        l2 = self._build([1])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2])
+        l1 = self._build([1,2,3])
+        l2 = self._build([])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2,3])
+        l1 = self._build([])
+        l2 = self._build([1,2,3])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2,3])
+        l1 = self._build([1,2,3])
+        l2 = self._build([4,5,6])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2,3,4,5,6])
+        l1 = self._build([1,6])
+        l2 = self._build([2,3,4,5])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2,3,4,5,6])
+        l1 = self._build([6])
+        l2 = self._build([1,2,3,4,5])
+        assert_equal(self._extract(s._merge(l1, l2)), [1,2,3,4,5,6])
+
     def test_simple(self):
         s = Solution()
         assert_equal(self._extract(s.sortList(self._build([]))), [])
@@ -97,6 +135,7 @@ class TestSolution(object):
 
     def test_example(self):
         pass
+
 
 if __name__=='__main__':
     import csv
