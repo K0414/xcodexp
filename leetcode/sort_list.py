@@ -107,13 +107,14 @@ class TestSolution(object):
         pass
 
 if __name__=='__main__':
-    import csv
-    l = []
-    with open('foo') as f:
-        r = csv.reader(f, delimiter=',')
-        for row in r:
-            l = [ int(x) for x in row ]
-    s = Solution()
-    ts = TestSolution()
-    ll = ts._build(l)
-    print ts._extract(s.sortList(ll))
+    pass
+#    import csv
+#    l = []
+#    with open('foo') as f:
+#        r = csv.reader(f, delimiter=',')
+#        for row in r:
+#            l = [ int(x) for x in row ]
+#    s = Solution()
+#    ts = TestSolution()
+#    ll = ts._build(l)
+#    print ts._extract(s.sortList(ll))
