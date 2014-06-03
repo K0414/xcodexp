@@ -33,7 +33,7 @@ class Solution:
         return head
 
     def _mergesort(self, head):
-        if not head or not head.next: return
+        if not head or not head.next: return head
         fastp = head
         slowp = head
         while fastp.next and fastp.next.next:
@@ -48,19 +48,27 @@ class Solution:
     def _merge(self, h1, h2):
         if not h1: return h2
         if not h2: return h1
+        head = None
         if h1.val > h2.val:
-            h1, h2 = h2, h1
-        head = h1
+            head = h2
+            h2 = h2.next
+        else:
+            head = h1
+            h1 = h1.next
+        p = head
         while h1 and h2:
             if h1.val < h2.val:
-                t = h2
-                h2 = h2.next
-                t.next = h1.next
-                h1.next = h2
-                h1 = t.next
+                p.next = h1
+                h1 = h1.next
             else:
-
-        return h1
+                p.next = h2
+                h2 = h2.next
+            p = p.next
+        if h1:
+            p.next = h1
+        if h2:
+            p.next = h2
+        return head
 
 
 class TestSolution(object):
