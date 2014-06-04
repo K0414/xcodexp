@@ -9,6 +9,8 @@ class Solution:
     def _check_dp(self, s1, s2, s3):
         m = len(s1)
         n = len(s2)
+        if m+n != len(s3):
+            return False
         dp = [[False] * (n+1) for _ in range(m+1)]
         dp[0][0] = True
         for i in range(1, m+1):
@@ -17,13 +19,14 @@ class Solution:
             else:
                 break
         for j in range(1, n+1):
-            if (s2[j-1] == s2[j-1]):
+            if (s2[j-1] == s3[j-1]):
                 dp[0][j] = True
             else:
                 break
         for i in range(1, m+1):
             for j in range(1, n+1):
-                ...
+                dp[i][j] = (dp[i-1][j] and s1[i-1] == s3[i+j-1]) \
+                           or (dp[i][j-1] and s2[j-1] == s3[i+j-1])
         return dp[m][n]
 
     def _check_recursive_tle(self, s1, s2, s3):
@@ -67,3 +70,5 @@ class TestSolution(object):
         s = Solution()
         assert_equal(s.isInterleave("aabcc", "dbbca", "aadbbcbcac"), True)
         assert_equal(s.isInterleave("aabcc", "dbbca", "aadbbbaccc"), False)
+        assert_equal(s.isInterleave("a", "b", "a"), False)
+        assert_equal(s.isInterleave("aacaac", "aacaaeaac", "aacaaeaaeaacaac"), False)
