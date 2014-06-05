@@ -5,13 +5,13 @@ class Solution:
     # @return an integer
     def largestRectangleArea(self, height):
         #return _solve_naive(self, height)
-        return _solve_dc_segtree(self, height)
+        return _solve_segtree(self, height)
         return _solve_stack(self, height)
 
     def _solve_stack(self, height):
         pass
 
-    def _solve_dc_segtree(self, height):
+    def _solve_segtree(self, height):
         pass
 
     def _solve_naive(self, height):
