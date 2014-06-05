@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=
+CFLAGS=-Wall
 TARGET=foo
 SRC=foo.cpp
 

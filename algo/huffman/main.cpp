@@ -32,10 +32,11 @@
 
 ***********************************************************/
 
-#include "main.h"
-#include "huffman.h"
+#include <stdio.h>
 #include <cstring>
 #include <getopt.h>
+#include "main.h"
+#include "huffman.h"
 
 void usage();
 
