@@ -22,17 +22,17 @@ class Solution:
         stack = []
         maxArea = 0
         for i in range(len(height)):
-            if not stack or height[stack[-1]] <= height[i]:
-                stack.append(i)
-            else:
-                while stack and height[stack[-1]] > height[i]:
-                    tp = stack[-1]
-                    maxArea = max(maxArea, height[tp] * (i - tp))
-                    stack.pop()
+            while stack and height[stack[-1]] > height[i]:
+                tp = stack[-1]
+                stack.pop()
+                ln = (i - stack[-1] - 1) if stack else i
+                maxArea = max(maxArea, height[tp] * ln)
+            stack.append(i)
         while stack:
             tp = stack[-1]
-            maxArea = max(maxArea, height[tp] * (len(height) - tp))
             stack.pop()
+            ln = (len(height) - stack[-1] - 1) if stack else len(height)
+            maxArea = max(maxArea, height[tp] * ln)
         return maxArea
 
     def _solve_dc(self, height):
@@ -163,6 +163,10 @@ class TestSolution(object):
         assert_equal(func([1,2,8,8,9,2,1]), 24)
         assert_equal(func([1,2,0,2,1]), 2)
         assert_equal(func([1,2,0,3,1]), 3)
+        assert_equal(func([8,9,7]), 21)
 
     def _example(self, func):
         assert_equal(func([2,1,5,6,2,3]), 10)
+        assert_equal(func([2,1,2]), 3)
+        assert_equal(func([5,4,1,2]), 8)
+        assert_equal(func([4,2,0,3,2,5]), 6)
