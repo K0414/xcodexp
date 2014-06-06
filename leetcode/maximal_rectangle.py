@@ -4,19 +4,37 @@ class Solution:
     # @param matrix, a list of lists of 1 length string
     # @return an integer
     def maximalRectangle(self, matrix):
-        return self._solve_scan(self, matrix)
+        return self._solve_scan(matrix)
 
     def _solve_scan(self, matrix):
-        pass
+        if not matrix: return 0
+        maxArea = 0
+        row = [0] * len(matrix[0])
+        for i in range(len(matrix)):
+            for j in range(len(row)):
+                if matrix[i][j] == '1':
+                    row[j] += 1
+                else:
+                    row[j] = 0
+            area = self._max_row_area(row)
+            maxArea = max(maxArea, area)
+        return maxArea
 
     def _max_row_area(self, row):
+        stack = []
         maxArea = 0
         for i in range(len(row)):
-            for j in range(i, len(row)):
-                m = row[i]
-                for k in range(i, j+1):
-                    m = min(m, row[k])
-                maxArea = max(maxArea, m * (j-i+1))
+            while stack and row[stack[-1]] > row[i]:
+                tp = stack[-1]
+                stack.pop()
+                ln = (i - stack[-1] - 1) if stack else i
+                maxArea = max(maxArea, row[tp] * ln)
+            stack.append(i)
+        while stack:
+            tp = stack[-1]
+            stack.pop()
+            ln = (len(row) - stack[-1] - 1) if stack else len(row)
+            maxArea = max(maxArea, row[tp] * ln)
         return maxArea
 
 #    def _solve_dp(self, matrix):
