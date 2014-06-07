@@ -170,3 +170,4 @@ class TestSolution(object):
         assert_equal(func([2,1,2]), 3)
         assert_equal(func([5,4,1,2]), 8)
         assert_equal(func([4,2,0,3,2,5]), 6)
+        assert_equal(func(range(500)), 62500)
