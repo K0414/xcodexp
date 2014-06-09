@@ -14,19 +14,18 @@ class Solution:
 
     def _solve(self, n):
         if n <= 0: return None
-        nodes = [ TreeNode(1) ]
+        # nodes[len][i] contains all binary trees
+        # with nodes from 1 to len and root i.
+        nodes = [ [None] ]
         for i in range(1, n):
-            ln = len(nodes)
-            for j in range(ln):
-                nodes.append(TreeNode(i+1))
-                nodes[-1].left = copy(nodes[j])
-            for j in range(ln):
-                p = nodes[j]
-                while p.right:
-                    p = p.right
-                p.right = TreeNode(i+1))
-            ...
-        return result
+            nodes.append([])
+            for j in range(i):
+                ln = len(nodes[j])
+                for k in range(ln):
+                    node = TreeNode(i)
+                    node.left = self._copy(nodes[j][k])
+                    nodes[-1].append(node)
+        return nodes
 
     def _copy(self, root):
         if not root: return None
@@ -37,25 +36,6 @@ class Solution:
 
 
 class TestSolution(object):
-
-    def _serialize(self, root):
-        ...
-
-    def _deserialize(self, lst):
-        root = TreeNode(lst[0])
-        q = [ root ]
-        i = 1
-        while i < len(lst):
-            n = q.pop(0)
-            if lst[i] != '#':
-                n.left = TreeNode(lst[i])
-                q.append(n.left)
-            i += 1
-            if lst[i] != '#':
-                n.right = TreeNode(lst[i])
-                q.append(n.right)
-            i += 1
-        return root
 
     def _assert(self):
         pass

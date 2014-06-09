@@ -43,23 +43,8 @@ class Solution:
         return root
 
 
+import helper
 class TestSolution(object):
-
-    def _deserialize(self, lst):
-        root = TreeNode(lst[0])
-        q = [ root ]
-        i = 1
-        while i < len(lst):
-            n = q.pop(0)
-            if lst[i] != '#':
-                n.left = TreeNode(lst[i])
-                q.append(n.left)
-            i += 1
-            if lst[i] != '#':
-                n.right = TreeNode(lst[i])
-                q.append(n.right)
-            i += 1
-        return root
 
     def _assert(self, root, lst):
         for v in lst:
@@ -68,12 +53,12 @@ class TestSolution(object):
 
     def test_simple(self):
         s = Solution()
-        root = self._deserialize([0])
+        root = helper.Tree.deserialize([0])
         self._assert(s.flatten(root), [0])
-        root = self._deserialize([1,2,3,'#','#',4,'#','#',5])
+        root = helper.Tree.deserialize([1,2,3,'#','#',4,'#','#',5])
         self._assert(s.flatten(root), [1,2,3,4,5])
 
     def test_example(self):
         s = Solution()
-        root = self._deserialize([1,2,5,3,4,'#',6])
+        root = helper.Tree.deserialize([1,2,5,3,4,'#',6])
         self._assert(s.flatten(root), [1,2,3,4,5,6])
