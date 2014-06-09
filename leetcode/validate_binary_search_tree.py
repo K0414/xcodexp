@@ -17,26 +17,27 @@ class Solution:
         if not root: return True
 
 
+
 class TestSolution(object):
 
     def test_simple(self):
-        import __helper
+        import helper
         s = Solution()
-        r = __helper.Tree.deserialize([1])
+        r = helper.Tree.deserialize([1])
         assert_equal(s.isValidBST(r), True)
-        r = __helper.Tree.deserialize([1,2])
+        r = helper.Tree.deserialize([1,2])
         assert_equal(s.isValidBST(r), False)
-        r = __helper.Tree.deserialize([1,'#',2])
+        r = helper.Tree.deserialize([1,'#',2])
         assert_equal(s.isValidBST(r), True)
 
     def test_example(self):
-        import __helper
+        import helper
         s = Solution()
-        r = __helper.Tree.deserialize([1,2,3,'#',4,5,6])
+        r = helper.Tree.deserialize([1,2,3,'#',4,5,6])
         assert_equal(s.isValidBST(r), False)
-        r = __helper.Tree.deserialize([3,2,4,1,'#','#',6,'#','#',5])
+        r = helper.Tree.deserialize([3,2,4,1,'#','#',6,'#','#',5])
         assert_equal(s.isValidBST(r), True)
-        r = __helper.Tree.deserialize([1,1])
+        r = helper.Tree.deserialize([1,1])
         assert_equal(s.isValidBST(r), False)
-        r = __helper.Tree.deserialize([10,5,15,'#','#',6,20])
+        r = helper.Tree.deserialize([10,5,15,'#','#',6,20])
         assert_equal(s.isValidBST(r), False)
