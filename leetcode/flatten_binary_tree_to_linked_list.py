@@ -43,7 +43,6 @@ class Solution:
         return root
 
 
-import helper
 class TestSolution(object):
 
     def _assert(self, root, lst):
@@ -52,6 +51,7 @@ class TestSolution(object):
             root = root.right
 
     def test_simple(self):
+        import helper
         s = Solution()
         root = helper.Tree.deserialize([0])
         self._assert(s.flatten(root), [0])
@@ -59,6 +59,7 @@ class TestSolution(object):
         self._assert(s.flatten(root), [1,2,3,4,5])
 
     def test_example(self):
+        import helper
         s = Solution()
         root = helper.Tree.deserialize([1,2,5,3,4,'#',6])
         self._assert(s.flatten(root), [1,2,3,4,5,6])

@@ -31,9 +31,9 @@ class Solution:
         return root
 
 
-import helper
 class TestSolution(object):
     def test_simple(self):
+        import helper
         s = Solution()
         root = s.buildTree([1], [1])
         assert_equal(helper.Tree.serialize(root), [1])
@@ -43,6 +43,7 @@ class TestSolution(object):
         assert_equal(helper.Tree.serialize(root), [1, 2])
 
     def test_example(self):
+        import helper
         s = Solution()
         root = s.buildTree([1,2,4,3,5,6], [2,4,1,5,3,6])
         assert_equal(helper.Tree.serialize(root), [1,2,3,'#',4,5,6])
