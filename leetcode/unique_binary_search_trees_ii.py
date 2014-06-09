@@ -47,3 +47,4 @@ class TestSolution(object):
         s = Solution()
         trees = s.generateTrees(3)
 
+
