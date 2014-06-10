@@ -12,8 +12,10 @@ class Solution:
     # @param root, a tree node
     # @return nothing
     def connect(self, root):
-        pass
+        self._solve(root)
 
+    def _solve(self, root):
+        pass
 
 class TestSolution(object):
 
@@ -22,3 +24,25 @@ class TestSolution(object):
 
     def test_example(self):
         s = Solution()
+        root = TreeNode(1)
+        root.left = TreeNode(2)
+        root.right = TreeNode(3)
+        root.left.left = TreeNode(4)
+        root.left.right = TreeNode(5)
+        root.right.left = TreeNode(6)
+        root.right.right = TreeNode(7)
+        s.connect(root)
+        p = root
+        assert_equal(p.val, 1)
+        p = root.left
+        assert_equal(p.val, 2)
+        p = p.next
+        assert_equal(p.val, 3)
+        p = root.left.left
+        assert_equal(p.val, 4)
+        p = p.next
+        assert_equal(p.val, 5)
+        p = p.next
+        assert_equal(p.val, 6)
+        p = p.next
+        assert_equal(p.val, 7)
