@@ -43,3 +43,31 @@ class Tree(object):
         while result and result[-1] == '#':
             result = result[:-1]
         return result
+
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class List(object):
+
+    @staticmethod
+    def build(L):
+        if not L: return None
+        head = ListNode(L[0])
+        curr = head
+        for v in L[1:]:
+            curr.next = ListNode(v)
+            curr = curr.next
+        return head
+
+    @staticmethod
+    def extract(head):
+        res = []
+        while head:
+            res.append(head.val)
+            head = head.next
+        return res
+
