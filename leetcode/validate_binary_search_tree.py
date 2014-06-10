@@ -127,7 +127,7 @@ class TestSolution(object):
         import helper
         s = Solution()
         r = helper.Tree.deserialize([1,2,3,'#',4,5,6])
-        #assert_equal(s.isValidBST(r), False)
+        assert_equal(s.isValidBST(r), False)
         r = helper.Tree.deserialize([3,2,4,1,'#','#',6,'#','#',5])
         assert_equal(s.isValidBST(r), True)
         r = helper.Tree.deserialize([1,1])
