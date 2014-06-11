@@ -3,7 +3,8 @@ from nose.tools import assert_equal
 class Solution:
     # @return a boolean
     def isMatch(self, s, p):
-        return self._solve_backtrace(s, p)
+        #return self._solve_backtrace(s, p)
+        return self._solve_nfa(s, p)
 
     def _solve_backtrace(self, s, p):
         while s and p and p[-1] != '*':
@@ -30,6 +31,62 @@ class Solution:
                 return True
         return self._matchhere(s, p)
 
+    def _solve_nfa(self, s, p):
+        class State(object):
+            Match = 256
+            def __init__(self, c):
+                self.char = c
+                self.out1 = None
+                self.out2 = None
+        def _build_nfa(regexp):
+            """
+            Since we only support '.' and '*' operators, no conversion to reverse
+            polish notation is needed. We can use a single pass scan to build the
+            NFA directly.
+            """
+            head = State('^')
+            states = [ head ]
+            for c in regexp:
+                if c == '*':
+                    e = states.pop()
+                    # Invalid regexp, '*' appears at the start.
+                    if e == head: return None
+                    s = State('*')
+                    s.out2 = e
+                    e.out1 = s
+                    states[-1].out1 = s
+                    states.append(s)
+                else:
+                    s = State(c)
+                    states[-1].out1 = s
+                    states.append(s)
+            states[-1].out1 = State(State.Match)
+            return states[0].out1
+        def _match(text, nfa):
+            statcurr = [ nfa ]
+            statnext = []
+            for c in text:
+                while statcurr:
+                    s = statcurr.pop(0)
+                    if s.char == '.' or s.char == c:
+                        statnext.append(s.out1)
+                    elif s.char == '*':
+                        if s.out1 not in statcurr:
+                            statcurr.append(s.out1)
+                        if s.out2 not in statcurr:
+                            statcurr.append(s.out2)
+                statcurr, statnext = statnext, []
+            for s in statcurr:
+                if s.char == State.Match:
+                    return True
+                if s.char == '*':
+                    statcurr.append(s.out1)
+                    statcurr.append(s.out2)
+            return False
+        nfa = _build_nfa(p)
+        if not nfa: return False
+        return _match(s, nfa)
+
 
 class TestSolution(object):
 
@@ -40,6 +97,8 @@ class TestSolution(object):
 
     def test_nfa(self):
         s = Solution()
+        self._simple(s._solve_nfa)
+        self._example(s._solve_nfa)
 
     def _simple(self, func):
         assert_equal(func("", ""), True)
@@ -67,4 +126,5 @@ class TestSolution(object):
         assert_equal(func("ab", ".*b"), True)
         assert_equal(func("ab", ".*c"), False)
         assert_equal(func("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c"), False)
+        assert_equal(func("aaa", "ab*a"), False)
 
