@@ -38,6 +38,7 @@ class Solution:
                 self.char = c
                 self.out1 = None
                 self.out2 = None
+                self.lastid = -1
         def _build_nfa(regexp):
             """
             Since we only support '.' and '*' operators, no conversion to reverse
@@ -65,16 +66,18 @@ class Solution:
         def _match(text, nfa):
             statcurr = [ nfa ]
             statnext = []
-            for c in text:
+            for i, c in enumerate(text):
                 while statcurr:
                     s = statcurr.pop(0)
                     if s.char == '.' or s.char == c:
-                        statnext.append(s.out1)
+                        if s.lastid != i:
+                            statnext.append(s.out1)
+                            s.lastid = i
                     elif s.char == '*':
-                        if s.out1 not in statcurr:
+                        if s.lastid != i:
                             statcurr.append(s.out1)
-                        if s.out2 not in statcurr:
                             statcurr.append(s.out2)
+                            s.lastid = i
                 statcurr, statnext = statnext, []
             for s in statcurr:
                 if s.char == State.Match:
