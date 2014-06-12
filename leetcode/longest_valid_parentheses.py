@@ -8,7 +8,10 @@ class Solution:
 
     def _solve_nn(self, s):
         maxlen = 0
+        self.memo = {}
         for i in range(len(s)):
+            if i in self.memo:
+                continue
             # If the number of half parentheses is not enough,
             # break the loop in advance.
             rparen = 0
@@ -34,14 +37,11 @@ class Solution:
                         if not stack:
                             count = 0
                     else:
-                        print j - start
                         maxlen = max(maxlen, j - start)
                         start = j+1
+                        self.memo[start] = 1
             maxlen = max(maxlen, len(s) - start - (2 * count + len(stack)))
         return maxlen
-
-    def _solve_dc(self, s):
-        pass
 
 
 class TestSolution(object):
