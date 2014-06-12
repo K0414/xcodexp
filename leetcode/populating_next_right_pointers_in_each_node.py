@@ -12,10 +12,35 @@ class Solution:
     # @param root, a tree node
     # @return nothing
     def connect(self, root):
-        self._solve(root)
+        #self._solve_recursive(root)
+        self._solve_loop(root)
 
-    def _solve(self, root):
-        pass
+    def _solve_recursive(self, root):
+        if not root: return
+        l = root.left
+        r = root.right
+        while l:
+            l.next = r
+            l = l.right
+            r = r.left
+        self._solve_recursive(root.left)
+        self._solve_recursive(root.right)
+
+    def _solve_loop(self, root):
+        """
+        Use previously connected link to traverse level by level.
+        """
+        while root and root.left:
+            n = root
+            p = None
+            while n:
+                n.left.next = n.right
+                if p:
+                    p.right.next = n.left
+                p = n
+                n = n.next
+            root = root.left
+
 
 class TestSolution(object):
 
