@@ -4,7 +4,20 @@ class Solution:
     # @param s, a string
     # @return an integer
     def longestValidParentheses(self, s):
-        return self._solve_nn(s)
+        #return self._solve_nn(s)
+        return self._solve_dp(s)
+
+    def _solve_dp(self, s):
+        if not s: return 0
+        dp = [0] * len(s)
+        for i in range(len(s)-1)[::-1]:
+            if s[i] == '(':
+                pos = i + dp[i+1] + 1
+                if pos < len(s) and s[pos] == ')':
+                    dp[i] = dp[i+1] + 2
+                    if pos + 1 < len(s):
+                        dp[i] += dp[pos + 1]
+        return max(dp)
 
     def _solve_nn(self, s):
         maxlen = 0
