@@ -5,12 +5,12 @@ class Solution:
     # @return an integer
     def singleNumber(self, A):
         """
-        An explanation to the Solution could be found at:
+        An explanation to the Solutions can be found at:
         https://oj.leetcode.com/discuss/857/constant-space-solution.
         """
-        return self._solve1(A)
-        return self._solve2(A)
-        return self._solve_general(A)
+        #return self._solve1(A)
+        #return self._solve2(A)
+        return self._solve_general(A, 3, 1)
 
     def _solve1(self, A):
         res = 0
@@ -34,7 +34,7 @@ class Solution:
             twos &= ~threes
         return ones
 
-    def _solve_general(self, A):
+    def _solve_general(self, A, k, l):
         """
         The general version of the question would be:
 
@@ -50,6 +50,12 @@ class Solution:
 
         Then the algorithms run in O(kn) and the extra space O(k).
         """
+        x = [0] * (k+1)
+        x[0] = ~0
+        for n in A:
+            for i in range(k+1)[::-1]:
+                x[i] = (x[i-1] & n) | (x[i] & ~n)
+        return x[l]
 
 
 class TestSolution(object):
